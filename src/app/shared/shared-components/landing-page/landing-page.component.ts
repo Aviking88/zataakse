@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 // import { PrelaunchService } from '../prelaunch.service';
 // import { CookieService } from 'src/app/shared/services/cookie.service';
 import { MatSnackBar, MatBottomSheet, MatDialog } from '@angular/material';
+import { LocationPopupComponent } from '../location-popup/location-popup.component';
 // import { LocationPopupComponent } from '../location-popup/location-popup.component';
 
 @Component({
@@ -96,14 +97,14 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   }
 
   onSubmitButtonClick() {
-    // const disRef = this.bottomsheet.open(LocationPopupComponent, {
-    //   data: {
-    //     isLocationNotAllowed: false,
-    //   }
-    // });
-    // disRef.afterDismissed().subscribe(() => {
-    //   this.setCurrentLocation();
-    // });
+    const disRef = this.bottomsheet.open(LocationPopupComponent, {
+      data: {
+        isLocationNotAllowed: false,
+      }
+    });
+    disRef.afterDismissed().subscribe(() => {
+      this.setCurrentLocation();
+    });
   }
 
   setCurrentLocation() {
@@ -113,7 +114,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
         position => {
           const latitude = position.coords.latitude;
           const longitude = position.coords.longitude;
-          // this.cookieService.setLocationPermissionStatus(true);
           // this.prelaunchService.setLocationData(latitude, longitude);
           this.router.navigate(['login-signup']);
         },
@@ -121,12 +121,11 @@ export class LandingPageComponent implements OnInit, OnDestroy {
           // User blocked location
           // LocationPopupComponent
           if (error.code === 1) {
-            // this.bottomsheet.open(LocationPopupComponent, {
-            //   data: {
-            //     isLocationNotAllowed: true,
-            //   }
-            // });
-            // this.cookieService.setLocationPermissionStatus(false);
+            this.bottomsheet.open(LocationPopupComponent, {
+              data: {
+                isLocationNotAllowed: true,
+              }
+            });
           }
           console.log(error);
         }

@@ -1,0 +1,13 @@
+<div matRipple class="locationdialog-conatiner custom-scroll">
+  <div class="cross">
+    <button mat-icon-button aria-label="" (click)="closePage()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div *ngFor="let browser of selectedBrowser" class="browser-content">
+    <!--browser name will change when other browser detects -->
+    <h3>Step: {{ browser.step }}</h3>
+    <img src="{{ browser.image }}" height="120px" alt="" />
+    <p>{{ browser.text }}</p>
+  </div>
+</div>
